@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Norway Seafood Exports to the US — Pre vs. Post Tariff Regime</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=general-sans@500,600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="container header-inner">
+        <a href="#" class="brand" aria-label="Nordic Seafood Intelligence">
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M2 14 Q 8 4, 14 14 T 26 14"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <path
+              d="M2 14 Q 8 24, 14 14 T 26 14"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+              opacity="0.5"
+            />
+            <circle cx="22" cy="13" r="1.5" fill="currentColor" />
+          </svg>
+          <span>Nordic Seafood Intelligence</span>
+        </a>
+        <span class="header-meta">Updated May 2026</span>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="eyebrow">
+          <span class="flag" aria-hidden="true">🇺🇸</span>
+          <span>US Tariff Impact Layer</span>
+        </div>
+        <h1>
+          Norway Seafood Exports to the US —<br />
+          <em>Pre vs. Post Tariff Regime</em>
+        </h1>
+        <p class="lede">
+          A third compounding headwind — alongside a strong krone and softer
+          dollar — has reset the trajectory of Norway's most lucrative US export
+          channel. This dashboard tracks monthly value, volume and price
+          dynamics across the April and August 2025 tariff inflection points.
+        </p>
+      </section>
+
+      <!-- KPI ROW -->
+      <section class="kpis" aria-label="Key indicators">
+        <article class="kpi">
+          <div class="kpi-label">Tariff rate (current)</div>
+          <div class="kpi-value">15<span class="unit">%</span></div>
+          <div class="kpi-delta delta-down">+15 pts vs. pre-April 2025</div>
+        </article>
+        <article class="kpi">
+          <div class="kpi-label">Salmon value to US · Jan 2026</div>
+          <div class="kpi-value">−37<span class="unit">%</span></div>
+          <div class="kpi-delta delta-down">YoY · NOK 415M lost</div>
+        </article>
+        <article class="kpi">
+          <div class="kpi-label">Salmon volume to US · Jan 2026</div>
+          <div class="kpi-value">−29<span class="unit">%</span></div>
+          <div class="kpi-delta delta-down">YoY · sharpest drop on record</div>
+        </article>
+        <article class="kpi">
+          <div class="kpi-label">2025 US share of total exports</div>
+          <div class="kpi-value">9<span class="unit">%</span></div>
+          <div class="kpi-delta delta-neutral">Highest since 1989</div>
+        </article>
+      </section>
+
+      <!-- CHART 1: Monthly value scenario -->
+      <section class="card">
+        <header class="card-header">
+          <div>
+            <h2>Monthly export value to the US</h2>
+            <p class="card-sub">
+              Stacked by species · Pre-tariff trajectory vs. realised
+              post-tariff path
+            </p>
+          </div>
+          <div class="controls" role="group" aria-label="Currency toggle">
+            <button class="chip active" data-currency="NOK">NOK</button>
+            <button class="chip" data-currency="USD">USD</button>
+          </div>
+        </header>
+        <div class="chart-wrap">
+          <canvas id="valueChart" aria-label="Monthly export value chart"></canvas>
+        </div>
+        <footer class="card-footer">
+          <div class="legend-row">
+            <span class="swatch sw-salmon"></span>Salmon
+            <span class="swatch sw-cod"></span>Cod &amp; whitefish
+            <span class="swatch sw-crab"></span>King &amp; snow crab
+            <span class="swatch sw-other"></span>Other species
+            <span class="swatch sw-counter"></span>Pre-tariff counterfactual
+          </div>
+        </footer>
+      </section>
+
+      <!-- CHART 2 + 3 row -->
+      <section class="grid-2">
+        <article class="card">
+          <header class="card-header">
+            <div>
+              <h2>Volume to the US market</h2>
+              <p class="card-sub">Tonnes shipped per month</p>
+            </div>
+          </header>
+          <div class="chart-wrap chart-wrap-md">
+            <canvas id="volumeChart" aria-label="Monthly export volume chart"></canvas>
+          </div>
+        </article>
+
+        <article class="card">
+          <header class="card-header">
+            <div>
+              <h2>Price per kg — US vs. other markets</h2>
+              <p class="card-sub">Salmon margin proxy · NOK/kg</p>
+            </div>
+          </header>
+          <div class="chart-wrap chart-wrap-md">
+            <canvas id="priceChart" aria-label="Price per kg chart"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <!-- TARIFF TIMELINE STRIP -->
+      <section class="card timeline-card">
+        <header class="card-header">
+          <div>
+            <h2>Tariff regime timeline</h2>
+            <p class="card-sub">
+              Two compounding shocks reshaped the US channel in 2025
+            </p>
+          </div>
+        </header>
+        <ol class="timeline">
+          <li>
+            <div class="t-date">Q1 2025</div>
+            <div class="t-rate">0%</div>
+            <div class="t-body">
+              <strong>Pre-tariff peak.</strong> Salmon exports to the US grew
+              <em>+47% YoY</em> in Q1; total seafood value to US rose +55%. The
+              US was on track to become Norway's largest single market.
+            </div>
+          </li>
+          <li class="t-shock">
+            <div class="t-date">Apr 2025</div>
+            <div class="t-rate t-rate-15">15%</div>
+            <div class="t-body">
+              <strong>Round 1 — reciprocal tariff.</strong> Trump administration
+              imposes a 10% baseline tariff and 15% for trade-surplus countries.
+              Norway lands at 15%, vs. 10% for the UK — an immediate
+              competitive disadvantage.
+            </div>
+          </li>
+          <li>
+            <div class="t-date">Q2–Q3</div>
+            <div class="t-rate t-rate-15">15%</div>
+            <div class="t-body">
+              <strong>Channel friction.</strong> Q2 value growth decelerates to
+              +20%; Q3 to just +6%. Importers absorb part of the levy; price per
+              kg to the US compresses against other markets.
+            </div>
+          </li>
+          <li class="t-shock">
+            <div class="t-date">Aug 2025</div>
+            <div class="t-rate t-rate-15p">15%+</div>
+            <div class="t-body">
+              <strong>Round 2 — escalation.</strong> Tariffs raised again on
+              select Norwegian seafood lines. Effective rate now 15% or higher
+              on <em>all</em> products.
+            </div>
+          </li>
+          <li>
+            <div class="t-date">Q4 2025</div>
+            <div class="t-rate t-rate-15p">15%+</div>
+            <div class="t-body">
+              <strong>First negative quarter.</strong> Value to US falls −1%
+              YoY. Strong krone and weaker dollar amplify the tariff drag.
+            </div>
+          </li>
+          <li class="t-now">
+            <div class="t-date">Jan 2026</div>
+            <div class="t-rate t-rate-15p">15%+</div>
+            <div class="t-body">
+              <strong>Tariff effect crystallises.</strong> Salmon value to US
+              drops <em>−37%</em>, volume <em>−29%</em>. US falls behind Poland,
+              China and the Netherlands as a salmon destination.
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- CHART 4: Margin compression -->
+      <section class="card">
+        <header class="card-header">
+          <div>
+            <h2>Margin compression — US price premium vs. global average</h2>
+            <p class="card-sub">
+              The wedge between US-realised price and Norway's blended
+              all-markets price · NOK/kg
+            </p>
+          </div>
+        </header>
+        <div class="chart-wrap">
+          <canvas id="marginChart" aria-label="Margin compression chart"></canvas>
+        </div>
+      </section>
+
+      <section class="footnote">
+        <h3>Sources &amp; methodology</h3>
+        <ul>
+          <li>
+            Annual and quarterly figures: <a href="https://en.seafood.no/news-and-media/news-archive/price-growth-for-wild-fish-and-increased-salmon-volume-resulted-in-record-value-for-norwegian-seafood-exports-in-2025-/" target="_blank" rel="noopener">Norwegian Seafood Council — 2025 Annual Report</a>.
+          </li>
+          <li>
+            January 2026 salmon impact: <a href="https://www.fishfarmingexpert.com/china-market-norwegian-salmon-norwegian-seafood-council/value-of-norway-salmon-exports-to-us-fell-by-43m-last-month/2064080" target="_blank" rel="noopener">Fish Farming Expert</a> &amp; <a href="https://en.seafood.no/news-and-media/news-archive/sharp-fall-in-value-to-the-us-contributed-to-decline-in-norwegian-seafood-exports-in-january/" target="_blank" rel="noopener">NSC January release</a>.
+          </li>
+          <li>
+            Tariff timeline: <a href="https://www.salmonbusiness.com/norway-faces-higher-us-tariffs-than-uk-under-trumps-new-import-rules/" target="_blank" rel="noopener">SalmonBusiness</a>, <a href="https://www.seafoodnews.com/Story/1342180/Strong-Kroner-Middle-East-War-US-Tariffs-Hit-Norways-Seafood-Exports-in-April" target="_blank" rel="noopener">SeafoodNews — April 2026 update</a>.
+          </li>
+          <li>
+            Monthly figures interpolated from quarterly NSC growth rates
+            (+55% / +20% / +6% / −1%) and 2024 baseline values; pre-tariff
+            counterfactual extends Q1 2025 trend at constant +47% YoY.
+          </li>
+        </ul>
+        <p class="signoff">
+          Built for Adrian Willanger · Pacific Northwest market intelligence ·
+          USD conversions at NOK/USD ≈ 10.3 (2025 average) and 9.6 (2026 YTD).
+        </p>
+      </section>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="charts.js"></script>
+  <script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
