@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Methodology — Norway Seafood US Tariff Impact</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=general-sans@500,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=20260607c" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="container header-inner">
+        <a href="index.html" class="brand" aria-label="Nordic Seafood Intelligence">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <path d="M2 14 Q 8 4, 14 14 T 26 14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
+            <path d="M2 14 Q 8 24, 14 14 T 26 14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5" />
+            <circle cx="22" cy="13" r="1.5" fill="currentColor" />
+          </svg>
+          <span>Nordic Seafood Intelligence</span>
+        </a>
+        <nav class="header-nav" aria-label="Dashboard pages">
+          <a href="index.html">Dashboard</a>
+          <a href="methodology.html" class="active">Methodology</a>
+          <a href="changelog.html">Changelog</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="doc">
+      <div class="doc-eyebrow">Methodology · v2026.06</div>
+      <h1>How this dashboard is built</h1>
+      <p class="lede">
+        Every number here is reconciled to a primary source before it ships. This page documents
+        what those sources are, how monthly granularity is reconstructed where the publishers
+        report quarterly, and what triggers an update vs. a silent end.
+      </p>
+
+      <h2>Primary source hierarchy</h2>
+      <p>
+        The dashboard ranks sources by proximity to first publication. NSC press releases are
+        treated as ground truth for the US channel; trade-press articles function as
+        cross-references that must agree with NSC within ±2% before a refresh is allowed to
+        proceed.
+      </p>
+      <table class="source-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Source</th>
+            <th>Role</th>
+            <th>Cadence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><a href="https://en.seafood.no/news-and-media/news-archive/" target="_blank" rel="noopener">Norwegian Seafood Council</a> monthly &amp; annual releases</td>
+            <td>Ground truth — US-channel value, volume, % YoY, tariff commentary</td>
+            <td>Monthly, ~3rd–8th of following month</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><a href="https://www.fishfarmingexpert.com/" target="_blank" rel="noopener">FishFarmingExpert</a></td>
+            <td>Cross-reference — typically quotes NSC analyst Paul T. Aandahl directly</td>
+            <td>Same-day as NSC release</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><a href="https://www.salmonbusiness.com/" target="_blank" rel="noopener">SalmonBusiness</a></td>
+            <td>Cross-reference — destination-market breakdown (Poland, China, Spain)</td>
+            <td>Same-day as NSC release</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><a href="https://www.seafoodnews.com/" target="_blank" rel="noopener">SeafoodNews</a></td>
+            <td>Cross-reference — species-level color (salmon fillet, king crab, mackerel)</td>
+            <td>Within 24h of NSC release</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><a href="https://www.norges-bank.no/en/topics/Statistics/exchange_rates/" target="_blank" rel="noopener">Norges Bank</a></td>
+            <td>FX — NOK/USD monthly averages for the USD chart toggle</td>
+            <td>Monthly</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Cross-reference reconciliation (±2% rule)</h2>
+      <p>
+        Every monthly refresh extracts the same headline figures from at least two of the
+        cross-references. If any cross-reference disagrees with NSC by more than 2% on salmon
+        value or volume to the US, the dashboard does <em>not</em> update silently — the gap is
+        logged to the <a href="changelog.html">changelog</a> and surfaced in the freshness badge
+        with an amber "gap flagged" state. This is the executable version of the
+        "we cross-check" claim.
+      </p>
+
+      <h2>Monthly data classification</h2>
+      <p>
+        Two tiers of data live in the dashboard, and pros should know which they're reading.
+      </p>
+      <h3>2026 onwards — <span class="pill pill-official">Official</span></h3>
+      <p>
+        Every 2026 monthly figure for salmon value, total US value, and volume is reported
+        directly by NSC in their monthly US-channel press releases. No interpolation. These are
+        the numbers a Norwegian Seafood Council analyst would defend.
+      </p>
+      <h3>2024–2025 — <span class="pill pill-estimated">Estimated</span> (monthly granularity)</h3>
+      <p>
+        NSC publishes monthly totals for all seafood exports, but their US-channel detail is
+        most reliably reported quarterly during 2024–2025. To reconstruct monthly granularity
+        for the visualisation, the dashboard applies:
+      </p>
+      <div class="formula">monthly_value[i] = 2024_baseline[same_month] × (1 + quarterly_YoY_growth) × seasonality_factor
+
+where quarterly_YoY_growth ∈ {+55%, +20%, +6%, -1%} for Q1–Q4 2025
+and seasonality_factor reflects Atlantic-salmon shipping cadence
+(lower in Q3, peaks in pre-Lenten Q1 and Q4 holiday).</div>
+      <p>
+        2024 baselines are taken directly from NSC's <a href="https://en.seafood.no/news-and-media/news-archive/price-growth-for-wild-fish-and-increased-salmon-volume-resulted-in-record-value-for-norwegian-seafood-exports-in-2025-/" target="_blank" rel="noopener">2025 annual report</a>. The 2025 quarterly cadence (+55% / +20% / +6% / −1%) comes from the same source.
+      </p>
+
+      <h2>Pre-tariff counterfactual</h2>
+      <p>
+        The dashed line on the value chart is the answer to one question: <em>"What would Norway
+        have exported to the US if the April 2025 tariff regime had never happened?"</em>
+      </p>
+      <p>
+        The counterfactual extends the Q1 2025 trajectory at constant +47% YoY uplift on salmon
+        value and +30% YoY on volume — both figures published by NSC as the pre-tariff Q1
+        growth rate. From April 2025 forward, the line is computed against same-month-prior-year
+        baselines × this uplift, with the same seasonality factor as the realised series. The
+        gap between bars and line is the cumulative tariff cost, in NOK.
+      </p>
+
+      <h2>FX (NOK ↔ USD)</h2>
+      <p>
+        The USD currency toggle uses <a href="https://www.norges-bank.no/en/topics/Statistics/exchange_rates/" target="_blank" rel="noopener">Norges Bank monthly average NOK/USD</a> rates. For 2026 these are applied per month. For 2024 and 2025 the dashboard uses Norges Bank calendar-year averages (10.6 NOK/USD for 2024, 10.3 for 2025) — point-in-time monthly rates for historical months will be backfilled in a future revision; see the <a href="changelog.html">changelog</a> for status.
+      </p>
+
+      <h2>Refresh cadence &amp; update logic</h2>
+      <p>
+        An automated task runs daily at 7am Pacific between the 5th and 12th of each month —
+        the window when NSC publishes its prior-month figures.
+      </p>
+      <h3>Each run does this:</h3>
+      <ul>
+        <li>Fetches the latest NSC news archive and identifies the most recent monthly US-channel release</li>
+        <li>Compares the latest month present in the release against the last month already in <code>data.js</code></li>
+        <li>If no new month is found, writes a one-line note to the cron log and ends silently — no email, no commit, no notification</li>
+        <li>If new data is found, extracts salmon NOK to US, total US value, volume to US, tariff rate, and FX from the release</li>
+        <li>Pulls 2–3 cross-reference articles and checks each against NSC within ±2% on salmon value and volume</li>
+        <li>If any cross-reference fails the ±2% gate, the dashboard is <em>not</em> updated; the gap is logged and the freshness badge flips to "gap flagged" until manually reconciled</li>
+        <li>If all checks pass, <code>data.js</code> is updated, the site is redeployed, the signature file is bumped, and an email digest goes out</li>
+      </ul>
+
+      <h2>What this dashboard is not</h2>
+      <ul>
+        <li><strong>Not a real-time price feed.</strong> NSC publishes monthly; the dashboard's resolution matches that. For weekly Norwegian salmon spot prices, see <a href="https://www.ssb.no/en/utenriksokonomi/utenrikshandel/statistikk/eksport-av-laks/artikler/salmon-price" target="_blank" rel="noopener">SSB's weekly export bulletin</a> — that's a separate, global series.</li>
+        <li><strong>Not a tariff legal-analysis tool.</strong> The tariff timeline reflects what was reported in trade press; for the underlying instrument and product-line specifics, see the USTR notices referenced in the source links.</li>
+        <li><strong>Not a CMA, valuation, or investment advice.</strong> This is market intelligence for industry context — equal-housing &amp; equal-opportunity-trade notwithstanding.</li>
+      </ul>
+
+      <h2>Corrections policy</h2>
+      <p>
+        If anything in here is wrong, the correction lands in the next refresh, gets a dated
+        entry in the <a href="changelog.html">changelog</a>, and the freshness badge reflects
+        the new state. Contact: <a href="mailto:Adrian@adrianwillanger.com">Adrian@adrianwillanger.com</a>.
+      </p>
+
+      <p style="margin-top: 3rem; font-size: var(--text-xs); color: var(--color-text-faint);">
+        Last methodology revision: 2026-06-07 · <a href="index.html">← Back to dashboard</a>
+      </p>
+    </main>
+  </body>
+</html>

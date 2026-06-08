@@ -44,9 +44,27 @@
           </svg>
           <span>Nordic Seafood Intelligence</span>
         </a>
-        <span class="header-meta">Updated May 2026</span>
+        <nav class="header-nav" aria-label="Dashboard pages">
+          <a href="index.html" class="active">Dashboard</a>
+          <a href="methodology.html">Methodology</a>
+          <a href="changelog.html">Changelog</a>
+        </nav>
       </div>
     </header>
+
+    <!-- FRESHNESS BADGE -->
+    <div class="freshness-strip" id="freshnessStrip" aria-label="Data freshness">
+      <div class="container freshness-inner">
+        <span class="freshness-dot" aria-hidden="true"></span>
+        <span class="freshness-label">Current as of</span>
+        <span class="freshness-item"><strong>NSC monthly:</strong> <span id="fNscMonth">—</span> <span class="freshness-muted">(added <span id="fNscAdded">—</span>)</span></span>
+        <span class="freshness-sep" aria-hidden="true">·</span>
+        <span class="freshness-item"><strong>FX:</strong> <span id="fFxSource">—</span></span>
+        <span class="freshness-sep" aria-hidden="true">·</span>
+        <span class="freshness-item" id="fCrossRef"><strong>Cross-refs:</strong> <span id="fCrossRefState">—</span></span>
+        <a class="freshness-link" href="methodology.html">How we verify →</a>
+      </div>
+    </div>
 
     <main class="container">
       <section class="hero">
@@ -74,14 +92,14 @@
           <div class="kpi-delta delta-down">+15 pts vs. pre-April 2025</div>
         </article>
         <article class="kpi">
-          <div class="kpi-label">Salmon value to US · Jan 2026</div>
-          <div class="kpi-value">−37<span class="unit">%</span></div>
-          <div class="kpi-delta delta-down">YoY · NOK 415M lost</div>
+          <div class="kpi-label">Salmon value to US · May 2026</div>
+          <div class="kpi-value">−40<span class="unit">%</span></div>
+          <div class="kpi-delta delta-down">YoY · NOK 630M lost · steepest on record</div>
         </article>
         <article class="kpi">
-          <div class="kpi-label">Salmon volume to US · Jan 2026</div>
-          <div class="kpi-value">−29<span class="unit">%</span></div>
-          <div class="kpi-delta delta-down">YoY · sharpest drop on record</div>
+          <div class="kpi-label">Total US value · May 2026</div>
+          <div class="kpi-value">−27<span class="unit">%</span></div>
+          <div class="kpi-delta delta-down">YoY · NSC monthly release</div>
         </article>
         <article class="kpi">
           <div class="kpi-label">2025 US share of total exports</div>
@@ -202,13 +220,24 @@
               YoY. Strong krone and weaker dollar amplify the tariff drag.
             </div>
           </li>
-          <li class="t-now">
+          <li>
             <div class="t-date">Jan 2026</div>
             <div class="t-rate t-rate-15p">15%+</div>
             <div class="t-body">
               <strong>Tariff effect crystallises.</strong> Salmon value to US
               drops <em>−37%</em>, volume <em>−29%</em>. US falls behind Poland,
               China and the Netherlands as a salmon destination.
+            </div>
+          </li>
+          <li class="t-now">
+            <div class="t-date">May 2026</div>
+            <div class="t-rate t-rate-15p">15%+</div>
+            <div class="t-body">
+              <strong>Triple headwind deepens.</strong> Salmon value to US falls
+              <em>−40% YoY</em> (NOK 630M lost) — steepest single-month decline on
+              record. King crab collapses as quota window stretches Mar–May.
+              Mackerel to US grows. Poland (+27%), China and Spain are May's
+              biggest salmon-growth markets.
             </div>
           </li>
         </ol>
@@ -234,29 +263,55 @@
         <h3>Sources &amp; methodology</h3>
         <ul>
           <li>
-            Annual and quarterly figures: <a href="https://en.seafood.no/news-and-media/news-archive/price-growth-for-wild-fish-and-increased-salmon-volume-resulted-in-record-value-for-norwegian-seafood-exports-in-2025-/" target="_blank" rel="noopener">Norwegian Seafood Council — 2025 Annual Report</a>.
+            <strong>Primary source — monthly US-channel figures:</strong> <a href="https://en.seafood.no/news-and-media/news-archive/" target="_blank" rel="noopener">Norwegian Seafood Council news archive</a>. Latest: <a href="https://www.mynewsdesk.com/seafood/pressreleases/lower-volumes-and-a-stronger-krone-led-to-a-decline-in-the-value-of-norwegian-seafood-exports-in-may-3451885" target="_blank" rel="noopener">May 2026 release (Jun 3, 2026)</a>.
           </li>
           <li>
-            January 2026 salmon impact: <a href="https://www.fishfarmingexpert.com/china-market-norwegian-salmon-norwegian-seafood-council/value-of-norway-salmon-exports-to-us-fell-by-43m-last-month/2064080" target="_blank" rel="noopener">Fish Farming Expert</a> &amp; <a href="https://en.seafood.no/news-and-media/news-archive/sharp-fall-in-value-to-the-us-contributed-to-decline-in-norwegian-seafood-exports-in-january/" target="_blank" rel="noopener">NSC January release</a>.
+            <strong>Cross-references:</strong> <a href="https://www.fishfarmingexpert.com/may-2026-norwegian-salmon-exports-norwegian-seafood-council/value-of-norways-salmon-exports-to-us-fell-by-50m-in-may/2132686" target="_blank" rel="noopener">FishFarmingExpert (May 2026)</a>, <a href="https://www.salmonbusiness.com/exports-europe-picks-up-the-slack-as-us-demand-falls/" target="_blank" rel="noopener">SalmonBusiness (May 2026)</a>, <a href="https://www.seafoodnews.com/Story/1332939/US-Market-Challenges-Push-Norwegian-Salmon-Fillet-Exports-Down-37-percent-Poland-and-China-Surge" target="_blank" rel="noopener">SeafoodNews</a>. Every monthly print is reconciled to NSC ±2% before the dashboard updates.
           </li>
           <li>
-            Tariff timeline: <a href="https://www.salmonbusiness.com/norway-faces-higher-us-tariffs-than-uk-under-trumps-new-import-rules/" target="_blank" rel="noopener">SalmonBusiness</a>, <a href="https://www.seafoodnews.com/Story/1342180/Strong-Kroner-Middle-East-War-US-Tariffs-Hit-Norways-Seafood-Exports-in-April" target="_blank" rel="noopener">SeafoodNews — April 2026 update</a>.
+            <strong>Tariff timeline:</strong> <a href="https://www.salmonbusiness.com/norway-faces-higher-us-tariffs-than-uk-under-trumps-new-import-rules/" target="_blank" rel="noopener">SalmonBusiness — Norway faces higher US tariffs than UK</a>, <a href="https://www.seafoodnews.com/Story/1342180/Strong-Kroner-Middle-East-War-US-Tariffs-Hit-Norways-Seafood-Exports-in-April" target="_blank" rel="noopener">SeafoodNews — April update</a>.
           </li>
           <li>
-            Monthly figures interpolated from quarterly NSC growth rates
-            (+55% / +20% / +6% / −1%) and 2024 baseline values; pre-tariff
-            counterfactual extends Q1 2025 trend at constant +47% YoY.
+            <strong>FX:</strong> <a href="https://www.norges-bank.no/en/topics/Statistics/exchange_rates/" target="_blank" rel="noopener">Norges Bank monthly average NOK/USD</a> (per-month for 2026, calendar-year averages for 2024–25).
+          </li>
+          <li>
+            <strong>Methodology:</strong> Pre-2026 monthly granularity interpolated from quarterly NSC growth rates (+55% / +20% / +6% / −1%) × 2024 baseline × Atlantic-salmon seasonality. 2026 monthly values are official NSC US-channel figures. Pre-tariff counterfactual extends Q1 2025 trend at constant +47% YoY uplift. <a href="methodology.html">Full methodology →</a>
+          </li>
+          <li>
+            <strong>Refresh log:</strong> <a href="changelog.html">View changelog →</a>
           </li>
         </ul>
         <p class="signoff">
           Built for Adrian Willanger · Pacific Northwest market intelligence ·
-          USD conversions at NOK/USD ≈ 10.3 (2025 average) and 9.6 (2026 YTD).
+          Automated monthly refresh on the NSC release window (5th–12th).
         </p>
       </section>
     </main>
 
-    <script src="data.js"></script>
-    <script src="charts.js"></script>
+    <script src="data.js?v=20260607c"></script>
+    <script>
+      // Wire freshness badge from data.js FRESHNESS object
+      (function(){
+        const f = (window.SeafoodData && window.SeafoodData.FRESHNESS) || {};
+        const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
+        set('fNscMonth', f.nsc_last_month);
+        set('fNscAdded', f.nsc_last_added);
+        set('fFxSource', f.fx_source);
+        const crEl = document.getElementById('fCrossRefState');
+        if (crEl) {
+          if (f.cross_refs_clean === true) {
+            crEl.textContent = 'clean (±2% vs NSC)';
+            crEl.classList.add('cr-ok');
+          } else if (f.cross_refs_clean === false) {
+            crEl.textContent = 'gap flagged — see changelog';
+            crEl.classList.add('cr-warn');
+          } else {
+            crEl.textContent = 'pending';
+          }
+        }
+      })();
+    </script>
+    <script src="charts.js?v=20260607c"></script>
   <script data-pplx-inline-edit>
 (function () {
   if (window === window.top) return;

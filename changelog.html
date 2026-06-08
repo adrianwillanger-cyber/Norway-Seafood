@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Changelog — Norway Seafood US Tariff Impact</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=general-sans@500,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=20260607c" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="container header-inner">
+        <a href="index.html" class="brand" aria-label="Nordic Seafood Intelligence">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <path d="M2 14 Q 8 4, 14 14 T 26 14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
+            <path d="M2 14 Q 8 24, 14 14 T 26 14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5" />
+            <circle cx="22" cy="13" r="1.5" fill="currentColor" />
+          </svg>
+          <span>Nordic Seafood Intelligence</span>
+        </a>
+        <nav class="header-nav" aria-label="Dashboard pages">
+          <a href="index.html">Dashboard</a>
+          <a href="methodology.html">Methodology</a>
+          <a href="changelog.html" class="active">Changelog</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="doc">
+      <div class="doc-eyebrow">Refresh log · append-only</div>
+      <h1>Changelog</h1>
+      <p class="lede">
+        Every data refresh and structural change to this dashboard is logged here with its
+        source URLs and cross-reference reconciliation result. Newest first.
+      </p>
+
+      <!-- Latest entry -->
+      <div class="changelog-entry entry-latest">
+        <div class="ch-date">2026-06-07 · Build 2026-06-07b</div>
+        <div class="ch-title">Methodology, freshness badge, and changelog added</div>
+        <ul>
+          <li>New <a href="methodology.html">/methodology.html</a> documenting source hierarchy, ±2% reconciliation rule, monthly-granularity reconstruction formula, and the pre-tariff counterfactual</li>
+          <li>New freshness badge in the page header showing NSC month, ingestion date, FX source, and cross-reference state</li>
+          <li>FX series pinned to <a href="https://www.norges-bank.no/en/topics/Statistics/exchange_rates/" target="_blank" rel="noopener">Norges Bank monthly averages</a>; 2026 now uses per-month rates (Jan: 10.05, Feb: 9.85, Mar: 9.70, Apr: 9.55, May: 9.40 NOK/USD)</li>
+          <li>Tariff timeline strip extended with May 2026 station</li>
+          <li>KPI strip pivoted from January 2026 anchor to May 2026 (−40% YoY salmon, −27% total US value)</li>
+        </ul>
+        <div class="ch-sources">
+          Sources: <a href="https://www.norges-bank.no/en/topics/Statistics/exchange_rates/" target="_blank" rel="noopener">Norges Bank FX</a>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="ch-date">2026-06-05 · Automated refresh</div>
+        <div class="ch-title">May 2026 data added</div>
+        <ul>
+          <li>Salmon value to US: NOK 672M, <strong>−40% YoY</strong> (NOK 630M lost) — steepest single-month decline on record</li>
+          <li>Total US value: NOK 992M, <strong>−27% YoY</strong></li>
+          <li>King crab to US collapsed as the quota window stretched March–May (live &amp; frozen volumes down)</li>
+          <li>Mackerel to US grew — larger-fish supply, Asian-American demand, competing products getting more expensive</li>
+          <li>Poland (+27%), China and Spain were May's biggest salmon-growth markets; US slid to #3</li>
+          <li>Tariff rate unchanged at 15%</li>
+        </ul>
+        <div class="ch-sources">
+          Sources: <a href="https://www.mynewsdesk.com/seafood/pressreleases/lower-volumes-and-a-stronger-krone-led-to-a-decline-in-the-value-of-norwegian-seafood-exports-in-may-3451885" target="_blank" rel="noopener">NSC release (Jun 3)</a> · <a href="https://www.fishfarmingexpert.com/may-2026-norwegian-salmon-exports-norwegian-seafood-council/value-of-norways-salmon-exports-to-us-fell-by-50m-in-may/2132686" target="_blank" rel="noopener">FishFarmingExpert</a> · <a href="https://www.salmonbusiness.com/exports-europe-picks-up-the-slack-as-us-demand-falls/" target="_blank" rel="noopener">SalmonBusiness</a> · <a href="https://www.seafoodnews.com/Story/1332939/US-Market-Challenges-Push-Norwegian-Salmon-Fillet-Exports-Down-37-percent-Poland-and-China-Surge" target="_blank" rel="noopener">SeafoodNews</a>. Cross-reference reconciliation: <span style="color:#2f5b4e;font-weight:600">clean (±2% vs NSC)</span>.
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="ch-date">2026-05-13</div>
+        <div class="ch-title">Monthly auto-refresh task scheduled</div>
+        <ul>
+          <li>Cron configured to check NSC's news archive daily at 7am Pacific on the 5th–12th of each month</li>
+          <li>Silent-end protocol added: runs that find no new data log to <code>cron_tracking</code> and end with no email, no commit, no notification</li>
+          <li>Email digest configured for runs that successfully ingest new data</li>
+        </ul>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="ch-date">2026-05-08</div>
+        <div class="ch-title">Initial publish</div>
+        <ul>
+          <li>Dashboard built covering Jan 2024 → April 2026 monthly figures</li>
+          <li>Pre-tariff counterfactual line introduced (Q1 2025 trajectory extended at +47% YoY)</li>
+          <li>Tariff timeline strip with April 2025 (Round 1, 15%) and August 2025 (Round 2, 15%+) inflection points</li>
+          <li>Margin compression chart added (US-realised price premium vs. blended global)</li>
+        </ul>
+        <div class="ch-sources">
+          Sources: <a href="https://en.seafood.no/news-and-media/news-archive/price-growth-for-wild-fish-and-increased-salmon-volume-resulted-in-record-value-for-norwegian-seafood-exports-in-2025-/" target="_blank" rel="noopener">NSC 2025 annual report</a> · <a href="https://www.salmonbusiness.com/norway-faces-higher-us-tariffs-than-uk-under-trumps-new-import-rules/" target="_blank" rel="noopener">SalmonBusiness — tariff differential vs. UK</a>
+        </div>
+      </div>
+
+      <h2>Correction history</h2>
+      <p>
+        No corrections to date. When a correction is required, it will appear above with the
+        affected figures, the source that triggered the correction, and the prior value crossed
+        out for transparency.
+      </p>
+
+      <p style="margin-top: 3rem; font-size: var(--text-xs); color: var(--color-text-faint);">
+        <a href="index.html">← Back to dashboard</a> · <a href="methodology.html">Methodology</a>
+      </p>
+    </main>
+  </body>
+</html>
